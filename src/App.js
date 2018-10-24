@@ -4,17 +4,11 @@ import { bindActionCreators } from 'redux'
 import logo from './logo.svg'
 import './App.css'
 import { fetchWeather } from './actions/weather'
-import WeatherDisplay from './components/WeatherDisplay'
+import WeatherContainer from './components/WeatherContainer'
 
 class App extends Component {
   componentDidMount () {
     this.props.fetchWeather()
-  }
-
-  renderWeatherDisplay (weatherData) {
-    return (
-      <WeatherDisplay key={weatherData.date} date={weatherData.date} temperature={weatherData.temperature} />
-    )
   }
 
   render () {
@@ -22,10 +16,7 @@ class App extends Component {
       <div className='App'>
         <header className='App-header'>
           <img src={logo} className='App-logo' alt='logo' />
-          <h1>Upcoming Weather</h1>
-          <div className='weather-container'>
-            {this.props.weather.temperatures.map(this.renderWeatherDisplay)}
-          </div>
+          <WeatherContainer data={this.props.weather} />
         </header>
       </div>
     )
@@ -36,7 +27,7 @@ const mapStateToProps = ({ weather }) => ({
   weather
 })
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return bindActionCreators({ fetchWeather }, dispatch)
 }
 
